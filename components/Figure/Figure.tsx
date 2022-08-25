@@ -1,8 +1,8 @@
 import { useFrame, useLoader } from '@react-three/fiber'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { fragmentShader } from '../../constants/fragment-shader'
-import { vertexShader } from '../../constants/vertex-shader'
+import { fragmentShader } from './glsl/fragment-shader'
+import { vertexShader } from './glsl/vertex-shader'
 import { gsap } from 'gsap'
 import { Mesh } from 'three'
 
