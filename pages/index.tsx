@@ -21,7 +21,7 @@ const CameraController = () => {
 const Home: NextPage = () => {
   return (
     <Canvas
-      camera={{ fov: 75, near: 0.1, far: 1000, position: [-1.6, 0, 7] }}
+      camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 0, 7] }}
       style={{ height: '100vh', backgroundColor: '#f8c8cf' }}
     >
       <CameraController />
