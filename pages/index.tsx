@@ -1,39 +1,54 @@
-import type { NextPage } from 'next'
-import React, { useEffect } from 'react'
-import { Canvas, useThree } from '@react-three/fiber'
-import Wave from '../components/Wave/Wave'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import React, { Suspense, useEffect, useState } from 'react'
+import { Canvas, extend } from '@react-three/fiber'
+import { ImageList } from '../components/ImageList'
+import { Mouse } from '../components/Mouse'
+import { Html, useProgress } from '@react-three/drei'
 
-const CameraController = () => {
-  const { camera, gl } = useThree()
-  useEffect(() => {
-    const controls = new OrbitControls(camera, gl.domElement)
+extend({ Canvas })
 
-    controls.minDistance = 6
-    controls.maxDistance = 8
-    return () => {
-      controls.dispose()
-    }
-  }, [camera, gl])
-  return null
+function Loader() {
+  const { progress } = useProgress()
+  return (
+    <Html center style={{ fontSize: 18 }}>
+      <div style={{ textAlign: 'center', marginBottom: 5 }}>Loading</div>
+      <div
+        style={{
+          height: 3,
+          backgroundColor: '#000',
+          borderRadius: 10,
+          width: progress,
+        }}
+      />
+    </Html>
+  )
 }
 
-const Home: NextPage = () => {
+const Home = () => {
+  const [isSSR, setIsSSR] = useState<boolean>(true)
+  const [hovered, setHovered] = useState<boolean>(false)
+  const [mouseDepth, setMouseDepth] = useState<number>(0.5)
+  useEffect(() => {
+    setIsSSR(false)
+  }, [])
   return (
-    <Canvas
-      camera={{ fov: 75, near: 0.1, far: 1000, position: [-1.6, 0, 7] }}
-      style={{ height: '100vh', backgroundColor: '#f8c8cf' }}
-    >
-      <CameraController />
-      {/* <Figure position={[3, 0, 0]} /> */}
-      {/* <Figure position={[0, 0, 0]} /> */}
-      {/* <mesh receiveShadow>
-        <planeBufferGeometry attach="geometry" args={[2, 2.5]} />
-        <meshPhongMaterial attach="material" color="red" />
-      </mesh> */}
-      <pointLight position={[10, 10, 10]} />
-      <Wave />
-    </Canvas>
+    !isSSR && (
+      <Canvas
+        camera={{
+          // zoom: 45,
+          fov: 100,
+          near: 0.1,
+          far: 1000,
+          position: [0, 0, 7],
+        }}
+        // orthographic
+        style={{ height: '100vh', backgroundColor: '#fff' }}
+      >
+        <Suspense fallback={<Loader />}>
+          <ImageList setHovered={setHovered} setMouseDepth={setMouseDepth} />
+          <Mouse hovered={hovered} depth={mouseDepth} />
+        </Suspense>
+      </Canvas>
+    )
   )
 }
 
