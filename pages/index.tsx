@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { Canvas, extend } from '@react-three/fiber'
 import { ImageList } from '../components/ImageList'
 import { Mouse } from '../components/Mouse'
-import { Html } from '@react-three/drei'
+import { Html, useCursor } from '@react-three/drei'
 
 extend({ Canvas })
 
@@ -15,6 +15,7 @@ const Loader = () => (
 const Home = () => {
   const [isSSR, setIsSSR] = useState<boolean>(true)
   const [hovered, setHovered] = useState<boolean>(false)
+  useCursor(hovered, 'none', 'default')
   const [mouseDepth, setMouseDepth] = useState<number>(0.5)
   useEffect(() => {
     setIsSSR(false)

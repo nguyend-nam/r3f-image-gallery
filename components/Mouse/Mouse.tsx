@@ -1,4 +1,4 @@
-import React, { Ref, useMemo, useRef } from 'react'
+import React, { Ref, useMemo, useRef, useState } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
 import { BufferGeometry, Material, Mesh } from 'three'
 import * as THREE from 'three'
@@ -7,12 +7,13 @@ import { fragmentShader } from './glsl/fragment-shader'
 export const Mouse = (props: any) => {
   const { hovered, depth } = props
   const { viewport } = useThree()
+  const [radius, setRadius] = useState<number>()
 
   const ref = useRef() as
     | Ref<Mesh<BufferGeometry, Material | Material[]>>
     | undefined
 
-  useFrame(({ mouse }) => {
+  useFrame(({ mouse, clock }) => {
     const x = (mouse.x * viewport.width) / 2.3
     const y = (mouse.y * viewport.height) / 2.3
     // @ts-ignore
@@ -22,6 +23,13 @@ export const Mouse = (props: any) => {
     //     ? 0.5
     //     : 0.0,
     // )
+    if (!hovered) {
+      clock.start()
+      setRadius(0.0)
+    }
+    if (clock.getElapsedTime() <= (depth / 2 + 0.5) / 5) {
+      setRadius(clock.getElapsedTime() * 5)
+    }
   })
 
   const data = useMemo(
@@ -37,7 +45,7 @@ export const Mouse = (props: any) => {
 
   return (
     <mesh ref={ref}>
-      <circleBufferGeometry args={[hovered ? depth / 2 + 0.5 : 0, 50]} />
+      <circleBufferGeometry args={[hovered ? radius : 0, 50]} />
       <shaderMaterial side={THREE.DoubleSide} {...data} transparent />
     </mesh>
   )

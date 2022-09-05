@@ -13,8 +13,8 @@ export const galleryGridPosition = [
   [8.5, -18, -0.3],
 ]
 
-const max = 0.4
-const min = -0.4
+const max = 0.45
+const min = -0.45
 
 export const galleryArbitraryGridPosition = [
   [-8.5, 0, Math.random() * (max - min) + min],
