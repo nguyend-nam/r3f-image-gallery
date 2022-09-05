@@ -2,26 +2,15 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { Canvas, extend } from '@react-three/fiber'
 import { ImageList } from '../components/ImageList'
 import { Mouse } from '../components/Mouse'
-import { Html, useProgress } from '@react-three/drei'
+import { Html } from '@react-three/drei'
 
 extend({ Canvas })
 
-function Loader() {
-  const { progress } = useProgress()
-  return (
-    <Html center style={{ fontSize: 18 }}>
-      <div style={{ textAlign: 'center', marginBottom: 5 }}>Loading</div>
-      <div
-        style={{
-          height: 3,
-          backgroundColor: '#000',
-          borderRadius: 10,
-          width: progress,
-        }}
-      />
-    </Html>
-  )
-}
+const Loader = () => (
+  <Html center style={{ fontSize: 18 }}>
+    <div>Loading</div>
+  </Html>
+)
 
 const Home = () => {
   const [isSSR, setIsSSR] = useState<boolean>(true)
