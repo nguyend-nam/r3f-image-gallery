@@ -3,6 +3,8 @@ import { Canvas, extend } from '@react-three/fiber'
 import { ImageList } from '../components/ImageList'
 import { Mouse } from '../components/Mouse'
 import { Html, useCursor } from '@react-three/drei'
+import { PerspectiveCamera } from 'three'
+import { perspectiveCameraAttr } from '../constants'
 
 extend({ Canvas })
 
@@ -12,6 +14,15 @@ const Loader = () => (
   </Html>
 )
 
+const CameraHelper = () => {
+  const camera = new PerspectiveCamera(100, 16.1 / 8.34, 1, 15.5)
+  return (
+    <group position={[0, 1, 2]}>
+      <cameraHelper args={[camera]} />
+    </group>
+  )
+}
+
 const Home = () => {
   const [isSSR, setIsSSR] = useState<boolean>(true)
   const [hovered, setHovered] = useState<boolean>(false)
@@ -20,22 +31,23 @@ const Home = () => {
   useEffect(() => {
     setIsSSR(false)
   }, [])
+  const { fov, near, far, zPosition } = perspectiveCameraAttr
+
   return (
     !isSSR && (
       <Canvas
         camera={{
-          // zoom: 45,
-          fov: 100,
-          near: 0.1,
-          far: 1000,
-          position: [0, 0, 7],
+          fov: fov,
+          near: near,
+          far: far,
+          position: [0, 0, zPosition],
         }}
-        // orthographic
-        style={{ height: '100vh', backgroundColor: '#fff' }}
+        style={{ height: '100vh', backgroundColor: '#000' }}
       >
         <Suspense fallback={<Loader />}>
           <ImageList setHovered={setHovered} setMouseDepth={setMouseDepth} />
           <Mouse hovered={hovered} depth={mouseDepth} />
+          <CameraHelper />
         </Suspense>
       </Canvas>
     )
