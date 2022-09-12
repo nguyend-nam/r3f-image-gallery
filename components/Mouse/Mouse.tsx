@@ -18,11 +18,6 @@ export const Mouse = (props: any) => {
     const y = (mouse.y * viewport.height) / 2.3
     // @ts-ignore
     ref.current.position.set(x, y, 1)
-    // setRadius(
-    //   0.1 / Math.sqrt((y * y + x * x) / 5) > 0.2 // take distance from mouse to (0, 0) point and invert it
-    //     ? 0.5
-    //     : 0.0,
-    // )
     if (!hovered) {
       clock.start()
       setRadius(0.0)
