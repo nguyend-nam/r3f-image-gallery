@@ -47,7 +47,7 @@ const Home = () => {
         <Suspense fallback={<Loader />}>
           <ImageList setHovered={setHovered} setMouseDepth={setMouseDepth} />
           <Mouse hovered={hovered} depth={mouseDepth} />
-          <CameraHelper />
+          {/* <CameraHelper /> */}
         </Suspense>
       </Canvas>
     )
