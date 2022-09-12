@@ -9,7 +9,7 @@ import { perspectiveCameraAttr } from '../constants'
 extend({ Canvas })
 
 const Loader = () => (
-  <Html center style={{ fontSize: 18 }}>
+  <Html center style={{ fontSize: 18, color: '#fff' }}>
     <div>Loading</div>
   </Html>
 )
