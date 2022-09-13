@@ -1,4 +1,4 @@
-import { RootState, useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { Ref, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { BufferGeometry, Material, Mesh } from 'three'
@@ -7,8 +7,7 @@ import { vertexShader } from './glsl/vertex-shader'
 import { scaleFromPixelSize } from '../../utils'
 
 export const ImageCard = (props: any) => {
-  const { viewport } = useThree<RootState>()
-  const { img, onMouseMove, ...o } = props
+  const { img, onMouseMove, colNumber, ...o } = props
 
   const ref = useRef() as
     | Ref<Mesh<BufferGeometry, Material | Material[]>>
@@ -43,10 +42,10 @@ export const ImageCard = (props: any) => {
       >
         <planeBufferGeometry
           args={
-            viewport.width > 18
+            colNumber >= 2
               ? [
-                  scaleFromPixelSize(window.innerWidth / 4),
-                  scaleFromPixelSize(window.innerWidth / 4) / 1.5,
+                  scaleFromPixelSize(window.innerWidth / (colNumber + 1)),
+                  scaleFromPixelSize(window.innerWidth / (colNumber + 1)) / 1.5,
                   10,
                   10,
                 ]

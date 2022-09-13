@@ -9,48 +9,57 @@ export const ImageList = (props: any) => {
   const { setHovered, setMouseDepth } = props
   const { viewport } = useThree<RootState>()
 
+  let columns: number
+  if (viewport.width <= 12) columns = 1
+  else if (viewport.width <= 20) columns = 2
+  else columns = 3
+
+  /**
+   * n rows of images rendered, first one is at y = 0,
+   * so I multiply n by the y position I specify for each ImageCard as below.
+   */
   const numberOfPages =
-    viewport.width > 18
-      ? // 4 rows of images rendered, first one is at y = 0,
-        // so I multiply 3 by the height I specify for each images as below.
-        (3 * ((scaleFromPixelSize(window.innerWidth / 4) + 1) / 1.5)) /
-          viewport.height +
-        1
-      : // same as above, but with 1 image each row.
-        (11 * ((scaleFromPixelSize(window.innerWidth / 1.5) + 1) / 1.5)) /
-          viewport.height +
-        1
+    ((Math.ceil(12 / columns) - 1) *
+      ((scaleFromPixelSize(
+        window.innerWidth / (columns + (columns === 1 ? 0.5 : 1)),
+      ) +
+        1) /
+        1.5)) /
+      viewport.height +
+    1
 
   return (
     <ScrollControls pages={numberOfPages}>
       <Scroll>
         {new Array(12).fill(1).map((_, index) => (
           <ImageCard
-            position={
-              viewport.width > 18
-                ? [
-                    // x position: since the layout has 3 columns, so I map the index [0, 1, 2,...]
-                    // to get the array [-n, 0, n, -n, 0, n,...] to separate 3 columns.
-                    index % 3 === 1
-                      ? 0
-                      : ((index % 3) - 1) *
-                        (scaleFromPixelSize(window.innerWidth / 4) + 1),
+            position={[
+              /**
+               * x position:
+               * odd:
+               *   columns = 3: [0, 1, 2] -> [-1, 0, 1]
+               *   columns = 5: [0, 1, 2, 3, 4] -> [-2, -1, 0, 1, 2]
+               * even:
+               *   columns = 2: [0, 1] -> [-0.5, 0.5]
+               *   columns = 4: [0, 1, 2, 3] -> [-1.5, -0.5, 0.5, 1.5]
+               */
+              ((index % columns) - (columns - 1) / 2) *
+                (scaleFromPixelSize(window.innerWidth / (columns + 1)) + 1),
 
-                    // y position: indexes 0, 1, 2 will be displayed in 1 line, and the same for
-                    // 3, 4, 5 and so on.
-                    -Math.floor(index / 3) *
-                      ((scaleFromPixelSize(window.innerWidth / 4) + 1) / 1.5),
+              /**
+               * y position: if columns = 3, indexes 0, 1, 2 will be displayed in 1 line, the same for
+               * 3, 4, 5 and so on.
+               */
+              -Math.floor(index / columns) *
+                ((scaleFromPixelSize(
+                  window.innerWidth / (columns + (columns < 2 ? 0.5 : 1)),
+                ) +
+                  1) /
+                  1.5),
 
-                    // z position: random constants in specified range.
-                    galleryArbitraryGridPosition[index],
-                  ]
-                : [
-                    0,
-                    -index *
-                      ((scaleFromPixelSize(window.innerWidth / 1.5) + 1) / 1.5),
-                    galleryArbitraryGridPosition[index],
-                  ]
-            }
+              // z position: random constants in specified range.
+              galleryArbitraryGridPosition[index],
+            ]}
             img={
               useLoader(THREE.TextureLoader, [
                 `/img/gallery/${index + 1}.jpg`,
@@ -61,6 +70,7 @@ export const ImageList = (props: any) => {
               setHovered(hovered)
               setMouseDepth(galleryArbitraryGridPosition[index])
             }}
+            colNumber={columns}
           />
         ))}
       </Scroll>
