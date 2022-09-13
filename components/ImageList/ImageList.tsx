@@ -14,17 +14,19 @@ export const ImageList = (props: any) => {
   else if (viewport.width <= 20) columns = 2
   else columns = 3
 
+  const gridGap = scaleFromPixelSize(35)
+
   /**
    * n rows of images rendered, first one is at y = 0,
    * so I multiply n by the y position I specify for each ImageCard as below.
    */
   const numberOfPages =
     ((Math.ceil(12 / columns) - 1) *
-      ((scaleFromPixelSize(
+      (scaleFromPixelSize(
         window.innerWidth / (columns + (columns === 1 ? 0.5 : 1)),
-      ) +
-        1) /
-        1.5)) /
+      ) /
+        1.5 +
+        gridGap)) /
       viewport.height +
     1
 
@@ -44,18 +46,19 @@ export const ImageList = (props: any) => {
                *   columns = 4: [0, 1, 2, 3] -> [-1.5, -0.5, 0.5, 1.5]
                */
               ((index % columns) - (columns - 1) / 2) *
-                (scaleFromPixelSize(window.innerWidth / (columns + 1)) + 1),
+                (scaleFromPixelSize(window.innerWidth / (columns + 1)) +
+                  gridGap),
 
               /**
                * y position: if columns = 3, indexes 0, 1, 2 will be displayed in 1 line, the same for
                * 3, 4, 5 and so on.
                */
               -Math.floor(index / columns) *
-                ((scaleFromPixelSize(
+                (scaleFromPixelSize(
                   window.innerWidth / (columns + (columns < 2 ? 0.5 : 1)),
-                ) +
-                  1) /
-                  1.5),
+                ) /
+                  1.5 +
+                  gridGap),
 
               // z position: random constants in specified range.
               galleryArbitraryGridPosition[index],
