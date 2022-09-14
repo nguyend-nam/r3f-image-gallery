@@ -4,7 +4,12 @@ import { BufferGeometry, Material, Mesh } from 'three'
 import * as THREE from 'three'
 import { fragmentShader } from './glsl/fragment-shader'
 
-export const Mouse = (props: any) => {
+interface Props {
+  hovered: boolean
+  depth: number
+}
+
+export const Mouse = (props: Props) => {
   const { hovered, depth } = props
   const { viewport } = useThree()
   const [radius, setRadius] = useState<number>()

@@ -6,7 +6,14 @@ import { fragmentShader } from './glsl/fragment-shader'
 import { vertexShader } from './glsl/vertex-shader'
 import { scaleFromPixelSize } from '../../utils'
 
-export const ImageCard = (props: any) => {
+interface Props {
+  img: THREE.Texture
+  onMouseMove: any
+  colNumber: number
+  position: any
+}
+
+export const ImageCard = (props: Props) => {
   const { img, onMouseMove, colNumber, ...o } = props
 
   const ref = useRef() as

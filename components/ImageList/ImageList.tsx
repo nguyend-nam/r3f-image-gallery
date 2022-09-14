@@ -5,7 +5,13 @@ import { galleryArbitraryGridPosition } from '../../constants'
 import { scaleFromPixelSize } from '../../utils'
 import { ImageCard } from '../ImageCard'
 
-export const ImageList = (props: any) => {
+interface Props {
+  setHovered: any
+  setMouseDepth: any
+  columns: number
+}
+
+export const ImageList = (props: Props) => {
   const { setHovered, setMouseDepth, columns } = props
   const { viewport } = useThree<RootState>()
 
