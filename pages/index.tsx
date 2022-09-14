@@ -4,7 +4,8 @@ import { ImageList } from '../components/ImageList'
 import { Mouse } from '../components/Mouse'
 import { Html, useCursor } from '@react-three/drei'
 import { PerspectiveCamera } from 'three'
-import { perspectiveCameraAttr } from '../constants'
+import { perspectiveCameraAttr, screenSize } from '../constants'
+import { scaleFromPixelSize } from '../utils'
 
 extend({ Canvas })
 
@@ -43,8 +44,9 @@ const Home = () => {
 
   useEffect(() => {
     setIsSSR(false)
-    if (viewport.width <= 12) setColumns(1)
-    else if (viewport.width <= 20) setColumns(2)
+
+    if (viewport.width <= scaleFromPixelSize(screenSize.sm)) setColumns(1)
+    else if (viewport.width <= scaleFromPixelSize(screenSize.md)) setColumns(2)
     else setColumns(3)
   }, [viewport.width])
 

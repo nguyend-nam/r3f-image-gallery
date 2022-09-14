@@ -15,22 +15,22 @@ export const ImageList = (props: Props) => {
   const { setHovered, setMouseDepth, columns } = props
   const { viewport } = useThree<RootState>()
 
+  const numberOfImages = 12
+  const imgRatio = 3 / 2
+
   // grid gap of 35px
   const gridGap = scaleFromPixelSize(35)
 
   // x & y position of the cell that contains the each image
   const gridCellWidth = scaleFromPixelSize(window.innerWidth / (columns + 1))
-  const gridCellHeight =
-    scaleFromPixelSize(
-      window.innerWidth / (columns + (columns < 2 ? 0.5 : 1)),
-    ) / 1.5
+  const gridCellHeight = gridCellWidth / imgRatio
 
   /**
    * n rows of images rendered, first one is at y = 0,
    * so I multiply n by the grid cell width.
    */
   const numberOfPages =
-    ((Math.ceil(12 / columns) - 1) * (gridCellHeight + gridGap)) /
+    ((Math.ceil(numberOfImages / columns) - 1) * (gridCellHeight + gridGap)) /
       viewport.height +
     1
 
@@ -72,6 +72,7 @@ export const ImageList = (props: Props) => {
               setMouseDepth(galleryArbitraryGridPosition[index])
             }}
             colNumber={columns}
+            imgRatio={imgRatio}
           />
         ))}
       </Scroll>

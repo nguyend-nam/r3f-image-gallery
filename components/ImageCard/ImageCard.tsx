@@ -10,11 +10,12 @@ interface Props {
   img: THREE.Texture
   onMouseMove: any
   colNumber: number
+  imgRatio: number
   position: any
 }
 
 export const ImageCard = (props: Props) => {
-  const { img, onMouseMove, colNumber, ...o } = props
+  const { img, onMouseMove, imgRatio, colNumber, ...o } = props
 
   const ref = useRef() as
     | Ref<Mesh<BufferGeometry, Material | Material[]>>
@@ -48,27 +49,17 @@ export const ImageCard = (props: Props) => {
         {...o}
       >
         <planeBufferGeometry
-          args={
-            colNumber >= 2
-              ? [
-                  scaleFromPixelSize(window.innerWidth / (colNumber + 1)),
-                  scaleFromPixelSize(window.innerWidth / (colNumber + 1)) / 1.5,
-                  10,
-                  10,
-                ]
-              : [
-                  scaleFromPixelSize(window.innerWidth / 1.5),
-                  scaleFromPixelSize(window.innerWidth / 1.5) / 1.5,
-                  10,
-                  10,
-                ]
-          }
+          args={[
+            scaleFromPixelSize(window.innerWidth / (colNumber + 1)), // colNumber + 1 represent vertical space interleaving columns
+            scaleFromPixelSize(window.innerWidth / (colNumber + 1)) / imgRatio,
+            10,
+            10,
+          ]}
         />
         <shaderMaterial
           {...data}
           side={THREE.DoubleSide}
           shadowSide={THREE.BackSide}
-          // wireframe
         />
       </mesh>
     </group>
