@@ -33,7 +33,7 @@ export const ImageList = (props: Props) => {
     1
 
   return (
-    <ScrollControls pages={numberOfPages}>
+    <ScrollControls pages={numberOfPages} damping={4}>
       <Scroll>
         {new Array(12).fill(1).map((_, index) => (
           <ImageCard
