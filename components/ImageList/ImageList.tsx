@@ -9,17 +9,15 @@ interface Props {
   setHovered: any
   setMouseDepth: any
   columns: number
+  gridGap: number
 }
 
 export const ImageList = (props: Props) => {
-  const { setHovered, setMouseDepth, columns } = props
+  const { setHovered, setMouseDepth, columns, gridGap } = props
   const { viewport } = useThree<RootState>()
 
   const numberOfImages = 12
   const imgRatio = 3 / 2
-
-  // grid gap of 35px
-  const gridGap = scaleFromPixelSize(35)
 
   // x & y position of the cell that contains the each image
   const gridCellWidth = scaleFromPixelSize(window.innerWidth / (columns + 1))
@@ -27,7 +25,7 @@ export const ImageList = (props: Props) => {
 
   /**
    * n rows of images rendered, first one is at y = 0,
-   * so I multiply n by the grid cell width.
+   * so I multiply n by the grid cell height.
    */
   const numberOfPages =
     ((Math.ceil(numberOfImages / columns) - 1) * (gridCellHeight + gridGap)) /
