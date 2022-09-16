@@ -4,7 +4,12 @@ import { BufferGeometry, Material, Mesh } from 'three'
 import * as THREE from 'three'
 import { fragmentShader } from './glsl/fragment-shader'
 
-export const Mouse = (props: any) => {
+interface Props {
+  hovered: boolean
+  depth: number
+}
+
+export const Mouse = (props: Props) => {
   const { hovered, depth } = props
   const { viewport } = useThree()
   const [radius, setRadius] = useState<number>()
@@ -18,11 +23,6 @@ export const Mouse = (props: any) => {
     const y = (mouse.y * viewport.height) / 2.3
     // @ts-ignore
     ref.current.position.set(x, y, 1)
-    // setRadius(
-    //   0.1 / Math.sqrt((y * y + x * x) / 5) > 0.2 // take distance from mouse to (0, 0) point and invert it
-    //     ? 0.5
-    //     : 0.0,
-    // )
     if (!hovered) {
       clock.start()
       setRadius(0.0)

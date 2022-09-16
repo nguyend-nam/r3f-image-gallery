@@ -4,9 +4,18 @@ import * as THREE from 'three'
 import { BufferGeometry, Material, Mesh } from 'three'
 import { fragmentShader } from './glsl/fragment-shader'
 import { vertexShader } from './glsl/vertex-shader'
+import { scaleFromPixelSize } from '../../utils'
 
-export const ImageCard = (props: any) => {
-  const { img, onMouseMove, ...o } = props
+interface Props {
+  img: THREE.Texture
+  onMouseMove: any
+  colNumber: number
+  imgRatio: number
+  position: any
+}
+
+export const ImageCard = (props: Props) => {
+  const { img, onMouseMove, imgRatio, colNumber, ...o } = props
 
   const ref = useRef() as
     | Ref<Mesh<BufferGeometry, Material | Material[]>>
@@ -39,7 +48,14 @@ export const ImageCard = (props: any) => {
         onPointerOut={() => onMouseMove(false)}
         {...o}
       >
-        <planeBufferGeometry args={[7.5, 5, 106, 106]} />
+        <planeBufferGeometry
+          args={[
+            scaleFromPixelSize(window.innerWidth / (colNumber + 1)), // colNumber + 1 represent vertical space interleaving columns
+            scaleFromPixelSize(window.innerWidth / (colNumber + 1)) / imgRatio,
+            10,
+            10,
+          ]}
+        />
         <shaderMaterial
           {...data}
           side={THREE.DoubleSide}
