@@ -1,25 +1,28 @@
 import { Scroll, ScrollControls } from '@react-three/drei'
 import { RootState, useLoader, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
-import { galleryArbitraryGridPosition } from '../../constants'
+import { galleryArbitraryGridPosition, placesName } from '../../constants'
 import { scaleFromPixelSize } from '../../utils'
 import { ImageCard } from '../ImageCard'
 
 interface Props {
   setHovered: any
+  setHoveredId: React.Dispatch<React.SetStateAction<number>>
   setMouseDepth: any
   columns: number
   gridGap: number
+  hovered: boolean[]
 }
 
 export const ImageList = (props: Props) => {
-  const { setHovered, setMouseDepth, columns, gridGap } = props
+  const { setHovered, setHoveredId, setMouseDepth, columns, gridGap, hovered } =
+    props
   const { viewport } = useThree<RootState>()
 
   const numberOfImages = 12
   const imgRatio = 3 / 2
 
-  // x & y position of the cell that contains the each image
+  /** x & y position of the cell that contains the each image */
   const gridCellWidth = scaleFromPixelSize(window.innerWidth / (columns + 1))
   const gridCellHeight = gridCellWidth / imgRatio
 
@@ -56,7 +59,7 @@ export const ImageList = (props: Props) => {
                */
               -Math.floor(index / columns) * (gridCellHeight + gridGap),
 
-              // z position: random constants in specified range.
+              /** z position: random constants in specified range. */
               galleryArbitraryGridPosition[index],
             ]}
             img={
@@ -66,11 +69,14 @@ export const ImageList = (props: Props) => {
             }
             key={index}
             onMouseMove={(hovered: boolean) => {
-              setHovered(hovered)
+              setHovered(index, hovered)
+              setHoveredId(index)
               setMouseDepth(galleryArbitraryGridPosition[index])
             }}
             colNumber={columns}
             imgRatio={imgRatio}
+            hovered={hovered[index]}
+            name={placesName[index]}
           />
         ))}
       </Scroll>
