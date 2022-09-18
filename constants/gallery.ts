@@ -9,7 +9,7 @@ new Array(12).fill(1).map(() => {
 })
 
 export const placesName = [
-  'Ha Long bay',
+  'Quang Ninh',
   'Seebensee',
   'Paris',
   'Moscow',
