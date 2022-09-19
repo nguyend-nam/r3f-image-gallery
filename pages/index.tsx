@@ -63,6 +63,7 @@ const Home = () => {
   const [hovered, setHovered] = useState<boolean[]>(new Array(12).fill(false))
   const [hoveredId, setHoveredId] = useState<number>(0)
   const [hoveredAny, setHoveredAny] = useState<boolean>(false)
+  const [numberOfPages, setNumberOfPages] = useState<number>(0)
 
   useEffect(() => {
     setHoveredAny(false)
@@ -79,15 +80,15 @@ const Home = () => {
 
   useCursor(hoveredAny, 'none', 'default')
   const [mouseDepth, setMouseDepth] = useState<number>(0.5)
-  // const [mousePosition, setMousePosition] = useState<number[]>([])
+  const [mousePosition, setMousePosition] = useState<number[]>([])
 
   const { viewport } = useThree<RootState>()
 
   // number of columns passed into ImageList component
   const [columns, setColumns] = useState<number>(3)
 
-  // grid gap of 35px for default
-  const [gridGap, setGridGap] = useState<number>(35)
+  // grid gap of 75px for default
+  const [gridGap, setGridGap] = useState<number>(75)
 
   // dat.gui
   let dat: any
@@ -101,10 +102,10 @@ const Home = () => {
     }
 
     if (viewport.width <= scaleFromPixelSize(screenSize.sm))
-      debugColumn = { columns: 1, gridGap: 25 }
+      debugColumn = { columns: 1, gridGap: 35 }
     else if (viewport.width <= scaleFromPixelSize(screenSize.lg))
-      debugColumn = { columns: 2, gridGap: 30 }
-    else debugColumn = { columns: 3, gridGap: 35 }
+      debugColumn = { columns: 2, gridGap: 55 }
+    else debugColumn = { columns: 3, gridGap: 75 }
 
     gui
       .add(debugColumn, 'columns')
@@ -118,7 +119,7 @@ const Home = () => {
     gui
       .add(debugColumn, 'gridGap')
       .min(0)
-      .max(50)
+      .max(100)
       .step(1)
       .onChange(() => {
         setGridGap(debugColumn.gridGap)
@@ -130,13 +131,13 @@ const Home = () => {
 
     if (viewport.width <= scaleFromPixelSize(screenSize.sm)) {
       setColumns(1)
-      setGridGap(25)
+      setGridGap(35)
     } else if (viewport.width <= scaleFromPixelSize(screenSize.md)) {
       setColumns(2)
-      setGridGap(30)
+      setGridGap(55)
     } else {
       setColumns(3)
-      setGridGap(35)
+      setGridGap(75)
     }
 
     renderGUI()
@@ -150,15 +151,17 @@ const Home = () => {
             setHovered={setHoveredById}
             setHoveredId={setHoveredId}
             setMouseDepth={setMouseDepth}
-            // mousePosition={mousePosition}
+            mousePosition={mousePosition}
             columns={columns}
             gridGap={scaleFromPixelSize(gridGap)}
             hovered={hovered}
+            setNumberOfPages={setNumberOfPages}
           />
           <Mouse
             hovered={hovered[hoveredId]}
             depth={mouseDepth}
-            // setMousePosition={setMousePosition}
+            setMousePosition={setMousePosition}
+            numberOfPages={numberOfPages}
           />
           {/* <CameraHelper /> */}
         </Suspense>

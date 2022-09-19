@@ -1,5 +1,5 @@
-const max = 0.4
-const min = -0.4
+const max = 0.35
+const min = -0.35
 const getArbitraryValRange = () => Math.random() * (max - min) + min
 
 export const galleryArbitraryGridPosition: number[] = []

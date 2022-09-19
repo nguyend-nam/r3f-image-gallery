@@ -13,7 +13,9 @@ interface Props {
   colNumber: number
   imgRatio: number
   position: any
-  // mousePosition: number[]
+  mousePosition: number[]
+  gridCellSize: number[]
+  hoveredList: boolean[]
   hovered: boolean
   name: string
 }
@@ -25,7 +27,9 @@ export const ImageCard = (props: Props) => {
     imgRatio,
     colNumber,
     position,
-    // mousePosition,
+    mousePosition,
+    gridCellSize,
+    hoveredList,
     hovered,
     name,
     ...o
@@ -41,13 +45,13 @@ export const ImageCard = (props: Props) => {
         uniformColor: { value: new THREE.Color(0.882, 0.247, 0.369) },
         uniformTime: { value: 0.0 },
         uniformTexture: { value: img },
-        // uniformTextureWidth: {
-        //   value: scaleFromPixelSize(window.innerWidth / (colNumber + 1)),
-        // },
-        // uniformPosition: { value: new THREE.Vector2(position[0], position[1]) },
-        // uniformMousePosition: {
-        //   value: new THREE.Vector2(mousePosition[0], mousePosition[1]),
-        // },
+        uniformGridSize: {
+          value: new THREE.Vector2(0.0, 0.0),
+        },
+        uniformPosition: { value: new THREE.Vector2(0.0, 0.0) },
+        uniformMousePosition: {
+          value: new THREE.Vector2(0.0, 0.0),
+        },
         uniformHover: { value: 0.0 },
       },
       fragmentShader,
@@ -61,7 +65,23 @@ export const ImageCard = (props: Props) => {
     // @ts-ignore
     ref.current.material.uniforms.uniformTime.value = a
     // @ts-ignore
-    ref.current.material.uniforms.uniformHover.value = hovered ? 1.0 : 0.0
+    ref.current.material.uniforms.uniformHover.value = hoveredList.some(
+      (h) => h,
+    )
+      ? 1.0
+      : 0.0
+    // @ts-ignore
+    ref.current.material.uniforms.uniformMousePosition.value = mousePosition
+    // @ts-ignore
+    ref.current.material.uniforms.uniformPosition.value = new THREE.Vector2(
+      position[0],
+      position[1],
+    )
+    // @ts-ignore
+    ref.current.material.uniforms.uniformGridSize.value = new THREE.Vector2(
+      gridCellSize[0],
+      gridCellSize[1],
+    )
   })
 
   return (
