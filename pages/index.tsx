@@ -87,8 +87,8 @@ const Home = () => {
   // number of columns passed into ImageList component
   const [columns, setColumns] = useState<number>(3)
 
-  // grid gap of 75px for default
-  const [gridGap, setGridGap] = useState<number>(75)
+  // grid gap of 60px for default
+  const [gridGap, setGridGap] = useState<number>(60)
 
   // dat.gui
   let dat: any
@@ -102,10 +102,10 @@ const Home = () => {
     }
 
     if (viewport.width <= scaleFromPixelSize(screenSize.sm))
-      debugColumn = { columns: 1, gridGap: 35 }
+      debugColumn = { columns: 1, gridGap: 30 }
     else if (viewport.width <= scaleFromPixelSize(screenSize.lg))
-      debugColumn = { columns: 2, gridGap: 55 }
-    else debugColumn = { columns: 3, gridGap: 75 }
+      debugColumn = { columns: 2, gridGap: 45 }
+    else debugColumn = { columns: 3, gridGap: 60 }
 
     gui
       .add(debugColumn, 'columns')
@@ -131,13 +131,13 @@ const Home = () => {
 
     if (viewport.width <= scaleFromPixelSize(screenSize.sm)) {
       setColumns(1)
-      setGridGap(35)
+      setGridGap(30)
     } else if (viewport.width <= scaleFromPixelSize(screenSize.md)) {
       setColumns(2)
-      setGridGap(55)
+      setGridGap(45)
     } else {
       setColumns(3)
-      setGridGap(75)
+      setGridGap(60)
     }
 
     renderGUI()
