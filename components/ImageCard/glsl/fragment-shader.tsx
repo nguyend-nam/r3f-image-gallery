@@ -1,9 +1,5 @@
 export const fragmentShader = `
-  uniform vec3 uniformColor;
-  uniform float uniformTime;
   uniform sampler2D uniformTexture;
-  uniform vec2 uniformMousePosition;
-  
   varying vec2 varyingUv;
 
   void main(){
