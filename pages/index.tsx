@@ -79,15 +79,15 @@ const Home = () => {
 
   useCursor(hoveredAny, 'none', 'default')
   const [mouseDepth, setMouseDepth] = useState<number>(0.5)
-  // const [mousePosition, setMousePosition] = useState<number[]>([])
+  const [mousePosition, setMousePosition] = useState<number[]>([])
 
   const { viewport } = useThree<RootState>()
 
   // number of columns passed into ImageList component
   const [columns, setColumns] = useState<number>(3)
 
-  // grid gap of 35px for default
-  const [gridGap, setGridGap] = useState<number>(35)
+  // grid gap of 40px for default
+  const [gridGap, setGridGap] = useState<number>(40)
 
   // dat.gui
   let dat: any
@@ -104,7 +104,7 @@ const Home = () => {
       debugColumn = { columns: 1, gridGap: 25 }
     else if (viewport.width <= scaleFromPixelSize(screenSize.lg))
       debugColumn = { columns: 2, gridGap: 30 }
-    else debugColumn = { columns: 3, gridGap: 35 }
+    else debugColumn = { columns: 3, gridGap: 40 }
 
     gui
       .add(debugColumn, 'columns')
@@ -136,7 +136,7 @@ const Home = () => {
       setGridGap(30)
     } else {
       setColumns(3)
-      setGridGap(35)
+      setGridGap(40)
     }
 
     renderGUI()
@@ -150,7 +150,7 @@ const Home = () => {
             setHovered={setHoveredById}
             setHoveredId={setHoveredId}
             setMouseDepth={setMouseDepth}
-            // mousePosition={mousePosition}
+            mousePosition={mousePosition}
             columns={columns}
             gridGap={scaleFromPixelSize(gridGap)}
             hovered={hovered}
@@ -158,7 +158,7 @@ const Home = () => {
           <Mouse
             hovered={hovered[hoveredId]}
             depth={mouseDepth}
-            // setMousePosition={setMousePosition}
+            setMousePosition={setMousePosition}
           />
           {/* <CameraHelper /> */}
         </Suspense>

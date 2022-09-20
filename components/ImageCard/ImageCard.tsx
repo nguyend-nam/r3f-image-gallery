@@ -13,7 +13,7 @@ interface Props {
   colNumber: number
   imgRatio: number
   position: any
-  // mousePosition: number[]
+  mousePosition: number[]
   hovered: boolean
   name: string
 }
@@ -25,7 +25,7 @@ export const ImageCard = (props: Props) => {
     imgRatio,
     colNumber,
     position,
-    // mousePosition,
+    mousePosition,
     hovered,
     name,
     ...o
@@ -45,9 +45,9 @@ export const ImageCard = (props: Props) => {
         //   value: scaleFromPixelSize(window.innerWidth / (colNumber + 1)),
         // },
         // uniformPosition: { value: new THREE.Vector2(position[0], position[1]) },
-        // uniformMousePosition: {
-        //   value: new THREE.Vector2(mousePosition[0], mousePosition[1]),
-        // },
+        uniformMousePosition: {
+          value: new THREE.Vector2(0.0, 0.0),
+        },
         uniformHover: { value: 0.0 },
       },
       fragmentShader,
@@ -62,6 +62,9 @@ export const ImageCard = (props: Props) => {
     ref.current.material.uniforms.uniformTime.value = a
     // @ts-ignore
     ref.current.material.uniforms.uniformHover.value = hovered ? 1.0 : 0.0
+    // @ts-ignore
+    ref.current.material.uniforms.uniformMousePosition.value =
+      new THREE.Vector2(mousePosition[0], mousePosition[1])
   })
 
   return (

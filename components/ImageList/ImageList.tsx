@@ -12,11 +12,19 @@ interface Props {
   columns: number
   gridGap: number
   hovered: boolean[]
+  mousePosition: number[]
 }
 
 export const ImageList = (props: Props) => {
-  const { setHovered, setHoveredId, setMouseDepth, columns, gridGap, hovered } =
-    props
+  const {
+    setHovered,
+    setHoveredId,
+    setMouseDepth,
+    columns,
+    gridGap,
+    hovered,
+    mousePosition,
+  } = props
   const { viewport } = useThree<RootState>()
 
   const numberOfImages = 12
@@ -68,6 +76,7 @@ export const ImageList = (props: Props) => {
               ])[0]
             }
             key={index}
+            mousePosition={mousePosition}
             onMouseMove={(hovered: boolean) => {
               setHovered(index, hovered)
               setHoveredId(index)

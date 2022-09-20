@@ -7,11 +7,11 @@ import { fragmentShader } from './glsl/fragment-shader'
 interface Props {
   hovered: boolean
   depth: number
-  // setMousePosition: React.Dispatch<React.SetStateAction<number[]>>
+  setMousePosition: React.Dispatch<React.SetStateAction<number[]>>
 }
 
 export const Mouse = (props: Props) => {
-  const { hovered, depth /*setMousePosition*/ } = props
+  const { hovered, depth, setMousePosition } = props
   const { viewport } = useThree()
   // const [radius, setRadius] = useState<number>()
 
@@ -22,7 +22,7 @@ export const Mouse = (props: Props) => {
   useFrame(({ mouse }) => {
     const x = (mouse.x * viewport.width) / 2.3
     const y = (mouse.y * viewport.height) / 2.3
-    // setMousePosition([x, y])
+    setMousePosition([x, y])
     // console.log(x, y)
     // @ts-ignore
     ref.current.position.set(x, y, 1)
