@@ -9,8 +9,8 @@ export const vertexShader = `
 
     vec3 pos = position;
 
-    vec2 noiseFreq = vec2(2, 1.5); // frequency of wave
-    vec2 noiseAmp = vec2(0.15, 0.1); // amplitude of wave
+    vec2 noiseFreq = vec2(2.0, 1.5); // frequency of wave
+    vec2 noiseAmp = vec2(0.1, 0.07); // amplitude of wave
 
     if(uniformHover == 1.0) {
       pos.z += sin(pos.x * noiseFreq.x - uniformMousePosition.x) * noiseAmp.x;

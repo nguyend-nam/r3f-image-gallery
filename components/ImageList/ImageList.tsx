@@ -31,15 +31,16 @@ export const ImageList = (props: Props) => {
   const imgRatio = 3 / 2
 
   /** x & y position of the cell that contains the each image */
-  const gridCellWidth = scaleFromPixelSize(window.innerWidth / (columns + 1))
-  const gridCellHeight = gridCellWidth / imgRatio
+  const gridCellWidth =
+    scaleFromPixelSize(window.innerWidth / (columns + 1)) + gridGap
+  const gridCellHeight = (gridCellWidth - gridGap) / imgRatio + gridGap
 
   /**
    * n rows of images rendered, first one is at y = 0,
    * so I multiply n by the grid cell height.
    */
   const numberOfPages =
-    ((Math.ceil(numberOfImages / columns) - 1) * (gridCellHeight + gridGap)) /
+    ((Math.ceil(numberOfImages / columns) - 1) * gridCellHeight) /
       viewport.height +
     1
 
@@ -58,14 +59,13 @@ export const ImageList = (props: Props) => {
                *   columns = 2: [0, 1] -> [-0.5, 0.5]
                *   columns = 4: [0, 1, 2, 3] -> [-1.5, -0.5, 0.5, 1.5]
                */
-              ((index % columns) - (columns - 1) / 2) *
-                (gridCellWidth + gridGap),
+              ((index % columns) - (columns - 1) / 2) * gridCellWidth,
 
               /**
                * y position: if columns = 3, indexes 0, 1, 2 will be displayed in 1 line, the same for
                * 3, 4, 5 and so on.
                */
-              -Math.floor(index / columns) * (gridCellHeight + gridGap),
+              -Math.floor(index / columns) * gridCellHeight,
 
               /** z position: random constants in specified range. */
               galleryArbitraryGridPosition[index],
