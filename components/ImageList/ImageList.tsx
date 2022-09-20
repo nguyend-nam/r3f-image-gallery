@@ -1,34 +1,46 @@
 import { Scroll, ScrollControls } from '@react-three/drei'
 import { RootState, useLoader, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
-import { galleryArbitraryGridPosition } from '../../constants'
+import { galleryArbitraryGridPosition, placesName } from '../../constants'
 import { scaleFromPixelSize } from '../../utils'
 import { ImageCard } from '../ImageCard'
 
 interface Props {
   setHovered: any
+  setHoveredId: React.Dispatch<React.SetStateAction<number>>
   setMouseDepth: any
   columns: number
   gridGap: number
+  hovered: boolean[]
+  mousePosition: number[]
 }
 
 export const ImageList = (props: Props) => {
-  const { setHovered, setMouseDepth, columns, gridGap } = props
+  const {
+    setHovered,
+    setHoveredId,
+    setMouseDepth,
+    columns,
+    gridGap,
+    hovered,
+    mousePosition,
+  } = props
   const { viewport } = useThree<RootState>()
 
   const numberOfImages = 12
   const imgRatio = 3 / 2
 
-  // x & y position of the cell that contains the each image
-  const gridCellWidth = scaleFromPixelSize(window.innerWidth / (columns + 1))
-  const gridCellHeight = gridCellWidth / imgRatio
+  /** x & y position of the cell that contains the each image */
+  const gridCellWidth =
+    scaleFromPixelSize(window.innerWidth / (columns + 1)) + gridGap
+  const gridCellHeight = (gridCellWidth - gridGap) / imgRatio + gridGap
 
   /**
    * n rows of images rendered, first one is at y = 0,
    * so I multiply n by the grid cell height.
    */
   const numberOfPages =
-    ((Math.ceil(numberOfImages / columns) - 1) * (gridCellHeight + gridGap)) /
+    ((Math.ceil(numberOfImages / columns) - 1) * gridCellHeight) /
       viewport.height +
     1
 
@@ -47,16 +59,15 @@ export const ImageList = (props: Props) => {
                *   columns = 2: [0, 1] -> [-0.5, 0.5]
                *   columns = 4: [0, 1, 2, 3] -> [-1.5, -0.5, 0.5, 1.5]
                */
-              ((index % columns) - (columns - 1) / 2) *
-                (gridCellWidth + gridGap),
+              ((index % columns) - (columns - 1) / 2) * gridCellWidth,
 
               /**
                * y position: if columns = 3, indexes 0, 1, 2 will be displayed in 1 line, the same for
                * 3, 4, 5 and so on.
                */
-              -Math.floor(index / columns) * (gridCellHeight + gridGap),
+              -Math.floor(index / columns) * gridCellHeight,
 
-              // z position: random constants in specified range.
+              /** z position: random constants in specified range. */
               galleryArbitraryGridPosition[index],
             ]}
             img={
@@ -65,12 +76,16 @@ export const ImageList = (props: Props) => {
               ])[0]
             }
             key={index}
+            mousePosition={mousePosition}
             onMouseMove={(hovered: boolean) => {
-              setHovered(hovered)
+              setHovered(index, hovered)
+              setHoveredId(index)
               setMouseDepth(galleryArbitraryGridPosition[index])
             }}
             colNumber={columns}
             imgRatio={imgRatio}
+            hovered={hovered[index]}
+            name={placesName[index]}
           />
         ))}
       </Scroll>
