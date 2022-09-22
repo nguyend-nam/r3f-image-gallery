@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const Mouse = (props: Props) => {
-  const { hovered, depth, setMousePosition } = props
+  const { setMousePosition } = props
   const { viewport } = useThree()
   // const [radius, setRadius] = useState<number>()
 
@@ -48,7 +48,8 @@ export const Mouse = (props: Props) => {
 
   return (
     <mesh ref={ref}>
-      <circleBufferGeometry args={[hovered ? depth / 2 + 0.5 : 0, 50]} />
+      {/* <circleBufferGeometry args={[hovered ? depth / 2 + 0.5 : 0, 50]} /> */}
+      <circleBufferGeometry args={[0, 50]} />
       <shaderMaterial side={THREE.DoubleSide} {...data} transparent />
     </mesh>
   )
