@@ -12,7 +12,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <StrictMode>
       <button
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: isDebugging ? '#000' : '#fff',
+          color: !isDebugging ? '#000' : '#fff',
           position: 'fixed',
           zIndex: 1000,
           top: 75,
@@ -33,7 +34,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           far: far,
           position: [0, 0, zPosition],
         }}
-        style={{ height: '100vh', backgroundColor: '#000' }}
+        style={{
+          height: '100vh',
+          backgroundColor: isDebugging ? '#fff' : '#000',
+        }}
       >
         <Component {...pageProps} isDebugging={isDebugging} />
       </Canvas>

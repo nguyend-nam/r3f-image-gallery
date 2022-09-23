@@ -24,14 +24,14 @@ const Loader = () => (
 )
 
 // camera helper
-export const CameraHelper = () => {
+const CameraHelper = () => {
   const { fov, near, far } = perspectiveCameraAttr
   const { viewport } = useThree<RootState>()
   const camera = new PerspectiveCamera(
     fov,
     viewport.width / viewport.height,
     near,
-    far,
+    far / 100,
   )
   return (
     <group position={[0, 1, 2]}>
@@ -47,7 +47,7 @@ const CameraController = () => {
     const controls = new OrbitControls(camera, gl.domElement)
 
     controls.minDistance = 5
-    controls.maxDistance = 15
+    controls.maxDistance = 25
 
     return () => {
       // controls.dispose()
@@ -80,7 +80,7 @@ const Home = ({ isDebugging }: { isDebugging: boolean }) => {
   const [isSSR, setIsSSR] = useState<boolean>(true)
   const [hovered, setHovered] = useState<boolean[]>(new Array(12).fill(false))
   const [hoveredId, setHoveredId] = useState<number>(0)
-  const [hoveredAny, setHoveredAny] = useState<boolean>(false)
+  const [hoveredAny, setHoveredAny] = useState<boolean>(false) // eslint-disable-line
 
   useEffect(() => {
     setHoveredAny(false)
@@ -145,7 +145,7 @@ const Home = ({ isDebugging }: { isDebugging: boolean }) => {
     }
 
     renderGUI()
-  }, [])
+  }, []) // eslint-disable-line
 
   useEffect(() => {
     setIsSSR(false)
@@ -182,7 +182,7 @@ const Home = ({ isDebugging }: { isDebugging: boolean }) => {
             depth={mouseDepth}
             setMousePosition={setMousePosition}
           />
-          {/* <CameraHelper /> */}
+          {isDebugging && <CameraHelper />}
         </Suspense>
         <Stats />
       </>
