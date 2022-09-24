@@ -17,6 +17,7 @@
     "dat.gui": "^0.7.9",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "gsap": "^3.11.0",
     "next": "12.2.5",
     "prettier": "^2.7.1",
