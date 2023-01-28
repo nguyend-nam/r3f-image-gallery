@@ -94,19 +94,28 @@ export const ImageCard = (props: Props) => {
         <Html
           center
           style={{
-            fontSize: 20,
-            color: '#fff',
+            fontSize: hovered ? 18 : 20,
+            color: '#fffc',
             pointerEvents: 'none',
             whiteSpace: 'nowrap',
             height: 'max-content',
             width: 'max-content',
-            transition: '0.2s',
+            transition: '0.275s',
             opacity: hovered ? 1 : 0,
             textTransform: 'uppercase',
             fontWeight: 'bold',
           }}
         >
-          <div>{name}</div>
+          <div
+            style={{
+              color: '#00e0c4',
+              background: '#0e101955',
+              padding: '4px 10px',
+              mixBlendMode: 'overlay',
+            }}
+          >
+            {name}
+          </div>
         </Html>
       </mesh>
     </group>

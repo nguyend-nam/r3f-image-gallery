@@ -1,5 +1,5 @@
-const max = 0.5
-const min = -0.5
+const max = 0.4
+const min = -0.4
 const getArbitraryValRange = () => Math.random() * (max - min) + min
 
 export const galleryArbitraryGridPosition: number[] = []
@@ -15,10 +15,10 @@ export const placesName = [
   'Moscow',
   'London',
   'Caucasus',
-  "Platja d'Alcúdia",
-  'Luxor',
+  'Bilbao',
+  'Fujiyoshida',
   'Crete',
   'San Francisco',
-  'Napoli',
-  'Wyoming',
+  'Naples',
+  'Amsterdam',
 ]

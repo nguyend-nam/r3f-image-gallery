@@ -18,8 +18,22 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 extend({ Canvas })
 
 const Loader = () => (
-  <Html center style={{ fontSize: 18, color: '#fff' }}>
-    <div>Loading</div>
+  <Html center>
+    <div
+      style={{
+        fontSize: 18,
+        color: '#00e0c4',
+      }}
+    >
+      <span
+        style={{
+          fontWeight: 500,
+        }}
+      >
+        Loading
+      </span>
+      ...
+    </div>
   </Html>
 )
 
@@ -80,14 +94,6 @@ const Home = ({ isDebugging }: { isDebugging: boolean }) => {
   const [isSSR, setIsSSR] = useState<boolean>(true)
   const [hovered, setHovered] = useState<boolean[]>(new Array(12).fill(false))
   const [hoveredId, setHoveredId] = useState<number>(0)
-  const [hoveredAny, setHoveredAny] = useState<boolean>(false) // eslint-disable-line
-
-  useEffect(() => {
-    setHoveredAny(false)
-    hovered.some((h) => {
-      if (h) setHoveredAny(true)
-    })
-  }, [hovered])
 
   const setHoveredById = (id: number, val: boolean) => {
     const arr = new Array(12).fill(false)
@@ -174,7 +180,7 @@ const Home = ({ isDebugging }: { isDebugging: boolean }) => {
             mousePosition={mousePosition}
             columns={columns}
             gridGap={scaleFromPixelSize(gridGap)}
-            hovered={hovered}
+            hovered={isDebugging ? new Array(12).fill(false) : hovered}
             isDebugging={isDebugging}
           />
           <Mouse
