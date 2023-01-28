@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               fontWeight: 600,
             }}
           >
-            {isDebugging ? 'Debug' : 'Normal'}
+            {isDebugging ? 'Normal' : 'Debug'}
           </span>{' '}
           mode
         </button>

@@ -56,18 +56,26 @@ const CameraHelper = () => {
 
 // orbitcontrols
 const CameraController = () => {
-  const { camera, gl } = useThree()
+  const { camera, gl, viewport } = useThree<RootState>()
   useEffect(() => {
     const controls = new OrbitControls(camera, gl.domElement)
 
     controls.minDistance = 5
-    controls.maxDistance = 25
+    if (viewport.width <= scaleFromPixelSize(screenSize.xs)) {
+      controls.maxDistance = 11
+    } else if (viewport.width <= scaleFromPixelSize(screenSize.sm)) {
+      controls.maxDistance = 8.5
+    } else if (viewport.width <= scaleFromPixelSize(screenSize.md)) {
+      controls.maxDistance = 7
+    } else {
+      controls.maxDistance = 15
+    }
 
     return () => {
       // controls.dispose()
       controls.reset()
     }
-  }, [camera, gl])
+  }, [camera, gl, viewport])
   return null
 }
 
@@ -125,10 +133,8 @@ const Home = ({ isDebugging }: { isDebugging: boolean }) => {
         gridGap: gridGap,
       }
 
-      if (viewport.width <= scaleFromPixelSize(screenSize.sm))
+      if (viewport.width <= scaleFromPixelSize(screenSize.md))
         debugColumn = { columns: 1, gridGap: 25 }
-      else if (viewport.width <= scaleFromPixelSize(screenSize.lg))
-        debugColumn = { columns: 2, gridGap: 30 }
       else debugColumn = { columns: 3, gridGap: 40 }
 
       gui
@@ -156,12 +162,9 @@ const Home = ({ isDebugging }: { isDebugging: boolean }) => {
   useEffect(() => {
     setIsSSR(false)
 
-    if (viewport.width <= scaleFromPixelSize(screenSize.sm)) {
+    if (viewport.width <= scaleFromPixelSize(screenSize.md)) {
       setColumns(1)
       setGridGap(25)
-    } else if (viewport.width <= scaleFromPixelSize(screenSize.md)) {
-      setColumns(2)
-      setGridGap(30)
     } else {
       setColumns(3)
       setGridGap(40)
