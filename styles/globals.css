@@ -15,6 +15,32 @@ a {
   box-sizing: border-box;
 }
 
+.dg.a {
+  display: fixed;
+  margin-right: 0 !important;
+  /* float: unset !important; */
+}
+
+.dg ul {
+  height: 54px !important;
+}
+
+.dg .close-button {
+  display: none !important;
+}
+
+.dg .cr.number {
+  border-left: 3px solid #00e0c4 !important;
+}
+
+.dg .c .slider-fg {
+  background: #00e0c4 !important;
+}
+
+.dg .cr.number input[type='text'] {
+  color: #00e0c4 !important;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
