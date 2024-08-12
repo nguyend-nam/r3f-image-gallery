@@ -19,8 +19,8 @@ export const vertexShader = `
     
     // gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
 
-    vec4 modelPosition = modelMatrix * vec4(pos, 1.0);
-    modelPosition.z += sin(modelPosition.x * noiseFreq + uniformTime) * noiseAmp;
+    // vec4 modelPosition = modelMatrix * vec4(pos, 1.0);
+    // modelPosition.z += sin(modelPosition.x * noiseFreq + uniformTime) * noiseAmp;
     gl_Position = projectionMatrix * viewMatrix * modelPosition;
   }
 `
